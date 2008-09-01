@@ -1,0 +1,24 @@
+= render_htmldoc_pdf
+
+== Summary
+
+Rails plugin to integrate the htmldoc executable and Ruby PDF::HTMLDoc gem with
+and ActionView
+
+== Prerequisites
+
+* You'll have to download, compile, and install the htmldoc executable. You can get
+  it from {the HTMLDoc website}[http://www.htmldoc.org/]. The latest developer
+  snapshot (1.9.x as of this writing) works just fine. If you're on a Windows machine,
+  you can get 1.8 from the repos.
+* The htmldoc gem. Just <tt>gem install htmldoc</tt>.
+
+== Usage
+
+You have two methods available in your controllers: <tt>render_pdf</tt> and
+<tt>render_pdf_to_file</tt>. Take a look at lib/controller.rb for more.
+
+== Author
+
+(c) 2008 Elliot Winkler (elliot dot winkler at gmail dot com). Released under the
+MIT license.
