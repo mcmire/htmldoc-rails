@@ -10,13 +10,19 @@ and ActionView
 * You'll have to download, compile, and install the htmldoc executable. You can get
   it from {the HTMLDoc website}[http://www.htmldoc.org/]. The latest developer
   snapshot (1.9.x as of this writing) works just fine. If you're on a Windows machine,
-  you can get 1.8 from the repos.
+  you can get 1.8 from the Cygwin repos.
 * The htmldoc gem. Just <tt>gem install htmldoc</tt>.
 
 == Usage
 
-You have two methods available in your controllers: <tt>render_pdf</tt> and
+Views that you want converted to PDF must have an 'rpdf' extension.
+
+You have two methods available in your controllers to run them through HTMLDoc: <tt>render_pdf</tt> and
 <tt>render_pdf_to_file</tt>. Take a look at lib/controller.rb for more.
+
+== Bugs
+
+Currently ERB blows up if you try to render a partial within an .rpdf. So don't do that.
 
 == Author
 
