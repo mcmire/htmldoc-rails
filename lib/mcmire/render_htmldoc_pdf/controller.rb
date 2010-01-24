@@ -1,6 +1,7 @@
 module Mcmire
   module RenderHtmldocPdf
     module Controller
+      
       # Converts the given view to PDF and gives it to the browser. You can call it like this
       #
       #   render_pdf :controller => 'foo', :action => 'bar'
@@ -78,11 +79,11 @@ module Mcmire
         File.open(filename, 'w') {|f| f.write(pdf_data) }
       end
 
-      private
-
+    private
       def content_type
         Mime.const_defined?(:PDF) ? Mime::Type.for(:pdf) : 'application/pdf'
       end
-    end
-  end
-end
+      
+    end # Controller
+  end # RenderHtmldocPdf
+end # Mcmire

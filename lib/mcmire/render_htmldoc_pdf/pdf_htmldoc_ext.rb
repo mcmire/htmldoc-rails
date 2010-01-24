@@ -1,3 +1,5 @@
+# Extend 'htmldoc' gem to support the edge releases of the htmldoc executable
+# and to make usage a bit more intuitive
 module PDF
   class HTMLDoc
     @@basic_options << :top    unless @@basic_options.include?(:top)
@@ -33,13 +35,11 @@ module PDF
     alias_method :old_initialize, :initialize
     def initialize(format=PDF)
       old_initialize(format)
-      puts "HTMLDoc options: #{@@instance_options.inspect}"
       @@instance_options.each {|option, value| set_option(option, value) }
     end
 
     def self.create(format = PDF, &block)
       pdf = HTMLDoc.new(format)
-      puts "HTMLDoc options: #{@@instance_options.inspect}"
       @@instance_options.each {|option, value| set_option(option, value) }
       if block_given?
         yield pdf

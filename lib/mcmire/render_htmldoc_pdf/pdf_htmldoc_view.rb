@@ -68,9 +68,3 @@ class PDF::HTMLDoc::View
     end
   end
 end
-
-if Rails::VERSION::MAJOR == 1
-  ActionView::Base
-else 
-  ActionView::Template
-end.register_template_handler 'rpdf', PDF::HTMLDoc::View
