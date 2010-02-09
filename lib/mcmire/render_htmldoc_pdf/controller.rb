@@ -13,15 +13,12 @@ module Mcmire
       #     :htmldoc => { :top => 50 }
       #
       # Options are:
-      #   :inline => true
-      #      Renders the PDF in the browser.
-      #   :download  => true | "..."
-      #   :attachment => true | "..."
-      #      Pops up a download box when the page loads. If this value is a string it becomes
-      #      the default filename for the file, otherwise the default filename will be the
-      #      name of the .rpdf file.
+      #   :as => :inline
+      #      Renders the PDF in the browser. (default)
+      #   :as => :attachment
+      #      Pops up a download box when the page loads.
       #   :filename => "..."
-      #      Alternate way to specify the default filename.
+      #      The default filename for the file being downloaded, assuming :as => :attachment.
       #   :url => {...} | "..."
       #      The url hash/string that points to the view to render.
       #   :htmldoc => {...}
@@ -31,10 +28,10 @@ module Mcmire
       # to the URL.
       def render_pdf(options)
         filename = options.delete(:filename)
-        disposition = (options.delete(:as) || params[:as] || :attachment).to_sym
+        disposition = (options.delete(:as) || params[:as] || :inline).to_sym
         htmldoc_options = options.delete(:htmldoc) || {}
         render_options = options.merge(options.delete(:url) || {})
-        if render_options.include?(:action) && !render_options.include?(:layout)
+        if !render_options.include?(:layout)
           render_options[:layout] = false
         end
         #format = (params[:format] || :pdf).to_sym
@@ -71,7 +68,7 @@ module Mcmire
       #   2. The url hash/string that points to the view to render
       #   3. Options to pass to HTMLDoc (optional)
       def render_pdf_to_file(filename, url_for_options, htmldoc_options={})
-        if url_for_options.include?(:action) && !url_for_options.include?(:layout)
+        if !url_for_options.include?(:layout)
           url_for_options[:layout] = false
         end
         headers["Content-Disposition"] = "inline"

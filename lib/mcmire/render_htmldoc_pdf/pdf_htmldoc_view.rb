@@ -1,6 +1,6 @@
 #
-# Based on PDF::HTMLDoc::View by vjt@openssl.it
-# See <http://pastie.caboo.se/75997> (or <http://wiki.rubyonrails.org/rails/pages/HTMLDOC>)
+# Based on PDF::HTMLDoc::View by Marcello Barnaba <vjt@openssl.it>
+# Source: http://gist.github.com/53906
 #
 class PDF::HTMLDoc::View
   include ApplicationHelper
@@ -36,12 +36,14 @@ class PDF::HTMLDoc::View
     end
 
     # Evaluate the view
-    content = (Rails::VERSION::MAJOR == 1) ? template : template.source
+    content = (ActionPack::VERSION::MAJOR == 1) ? template : template.source
     markup = ERB.new(content).result(binding)
 
     # DEBUG
     puts "PDF::HTMLDoc::View: Writing view to file"
-    outfile = File.join(RAILS_ROOT, 'tmp', "out.html")
+    dir = File.join(RAILS_ROOT, 'tmp')
+    FileUtils.mkdir_p(dir)
+    outfile = File.join(dir, "out.html")
     File.open(outfile, 'w') {|f| f.write(markup) }
 
     # Run the view through HTMLDoc and return the output, or raise errors if there are any
@@ -54,7 +56,9 @@ class PDF::HTMLDoc::View
     
     # DEBUG
     puts "PDF::HTMLDoc::View: Writing PDF to file"
-    outfile = File.join(RAILS_ROOT, 'tmp', "out.pdf")
+    dir = File.join(RAILS_ROOT, 'tmp')
+    FileUtils.mkdir_p(dir)
+    outfile = File.join(dir, "out.pdf")
     File.open(outfile, 'w') {|f| f.write(result) }
     
     return result if result
