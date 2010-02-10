@@ -54,7 +54,7 @@ Once you've got the htmldoc executable installed, you'll need the htmldoc Ruby g
 
 Finally, you can install this gem:
 
-    gem install rails_htmldoc
+    gem install htmldoc-rails
 
 ## Support
 

@@ -34,7 +34,8 @@ module Mcmire
         if !render_options.include?(:layout)
           render_options[:layout] = false
         end
-        #format = (params[:format] || :pdf).to_sym
+        #format = (params[:format] || :rpdf).to_sym
+        #render_options[:format] = format
       
         send_data_options = { :type => content_type }
         send_data_options[:filename] = filename if filename
@@ -49,9 +50,13 @@ module Mcmire
           headers['Cache-Control'] = 'no-cache, must-revalidate'
         end
       
+        #puts "Render options: #{render_options.inspect}"
+      
         # run view through PDF::HTMLDoc::View
         pdf_data = PDF::HTMLDoc.with_options(htmldoc_options) { render_to_string(render_options) }
-        if pdf_data
+        #puts "PDF data:"
+        #puts pdf_data
+        unless pdf_data.blank?
           send_data(pdf_data, send_data_options) 
         else
           render :text => "HTMLDoc had trouble parsing the HTML to create the PDF."
@@ -78,7 +83,7 @@ module Mcmire
 
     private
       def content_type
-        Mime.const_defined?(:PDF) ? Mime::Type.for(:pdf) : 'application/pdf'
+        Mime::Type.lookup_by_extension('pdf')
       end
       
     end # Controller

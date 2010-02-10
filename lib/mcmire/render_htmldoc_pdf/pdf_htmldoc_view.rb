@@ -1,40 +1,25 @@
-#
 # Based on PDF::HTMLDoc::View by Marcello Barnaba <vjt@openssl.it>
-# Source: http://gist.github.com/53906
+# http://gist.github.com/53906
 #
-class PDF::HTMLDoc::View
+class PDF::HTMLDoc::View < ActionView::TemplateHandler
+  #include ActionView::TemplateHandlers::Compilable
+  
   include ApplicationHelper
+  include ActionView::Helpers::TranslationHelper
   include ActionView::Helpers::AssetTagHelper
+  include ActionView::Helpers::TextHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::UrlHelper
-  include ActionView::Helpers::TextHelper
-  include ActionView::Helpers::NumberHelper
-  include ActionView::Partials
+  
+  def self.call(template)
+    "PDF::HTMLDoc::View.new(self).render(template, local_assigns)"
+  end
 
   def initialize(action_view)
     @action_view = action_view
-    @controller = @action_view.controller
-    # Include helper for controller in the view
-    # FIXME: This will die if there is no helper
-    self.class.class_eval "include ::#{@controller.class.to_s.sub(/Controller$/, 'Helper')}"
   end
   
-  def self.compilable?
-  	false
-  end
-  def compilable?
-  	self.class.compilable?
-  end
-
-  def render(template, local_assigns = {})
-    # Set default disposition
-    #@controller.headers['Content-Disposition'] ||= 'inline'
-
-    # Copy instance variables from controller to view
-    @controller.instance_variables.each do |v|
-      instance_variable_set(v, @controller.instance_variable_get(v))
-    end
-
+  def render(template, local_assigns={})
     # Evaluate the view
     content = (ActionPack::VERSION::MAJOR == 1) ? template : template.source
     markup = ERB.new(content).result(binding)

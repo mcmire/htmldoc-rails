@@ -1,1 +1,1 @@
-<p>This is some text and stuff</p>
+<p>This is some <%= "text" %> and stuff</p>

@@ -20,6 +20,14 @@ module RenderPdfToFileHelper; end
 Protest::Rails::FunctionalTestCase.describe("render_pdf_to_file") do
   self.controller_class = RenderPdfToFileController
   
+  def visit(url, options={})
+    get(url, options)
+    #puts "Headers:"
+    #pp :headers => response.headers
+    #puts "Response body:"
+    #puts response.body unless response.success?
+  end
+  
   test "writes the rendered PDF to the given file" do
     visit :default
     File.exists?("/tmp/htmldoc-rails.test.pdf").should == true

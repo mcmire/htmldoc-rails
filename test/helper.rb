@@ -39,12 +39,14 @@ require 'action_pack/version'
 require 'active_support/version'
 
 RAILS_ROOT = File.expand_path(File.dirname(__FILE__))
+RAILS_ENV = "test"
+
+#ActionController::Base.logger = Logger.new(STDOUT)
+#ActionController::Base.logger.level = Logger::DEBUG
 
 # Disable sessions so we don't get a 'key is required to write a cookie
 # containing the session data' error
 ActionController::Base.session_store = nil
-
-ActionController::Base.view_paths = File.dirname(__FILE__) + '/views'
 
 # Copied from Protest::Rails, customized to remove webrat and transactions,
 # made compatible with Rails 2.1
@@ -144,14 +146,13 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action'
 end
 
-Protest::Rails::FunctionalTestCase.class_eval do
-  def visit(url, options={})
-    get(url, options)
-    #puts "Headers:"
-    #pp :headers => response.headers
-    #puts "Response body:"
-    #puts response.body unless response.success?
-  end
-end
-
 require 'mcmire/render_htmldoc_pdf'
+
+# This has to be set after we require htmldoc-rails and consequently
+# after rpdf is added to the template handlers, that way the Template objects
+# have rpdf stored as the extension
+ActionController::Base.view_paths = File.expand_path(File.dirname(__FILE__) + '/views')
+#template = ActionController::Base.view_paths["render_pdf/doc.rpdf"]
+#pp :paths => ActionController::Base.view_paths,
+#   :template => template,
+#   :zzztop => template.send(:valid_extension?, "rpdf")

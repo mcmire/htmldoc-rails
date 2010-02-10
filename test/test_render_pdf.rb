@@ -3,6 +3,7 @@ require 'helper'
 class RenderPdfController < ActionController::Base
   def default
     render_pdf :action => 'doc.rpdf'
+    #render_pdf :file => File.dirname(__FILE__) + '/views/render_pdf/doc.rpdf'
   end
   def default_with_layout
     render_pdf :action => 'doc.rpdf', :layout => "layout"
@@ -29,8 +30,38 @@ end
 
 module RenderPdfHelper; end
 
+# AV::Template#initialize("/full/path/to/render_pdf/doc.rpdf")
+# - AV::Template#split("/full/path/to/render_pdf/doc.rpdf")
+#   - AV::Template#valid_extension?("rpdf") #=> [base_path = "/full/path/to/render_pdf/", name = "doc", format = nil, extension = "rpdf"]
+#
+# AC::Base#render(options = {:action => 'doc.rpdf', :layout => false}, extra_options = {}):
+# - AC::Base#pick_layout(options = {:action => 'doc.rpdf', :layout => false}) #=> nil
+# - AC::Base#default_template_name(action_name = "doc.rpdf") #=> "render_pdf/doc.rpdf"
+# - AC::Base#render_for_file(action_name = "render_pdf/doc.rpdf", status = nil, layout = nil, locals = {})
+#   - AV::Base#render(options = {:file => "render_pdf/doc.rpdf", :locals => {}, :layout => nil}, local_assigns = {})
+#     - AV::Base#_pick_template(template_path = "render_pdf/doc.rpdf") #=> AV::Template.new("/full/path/to/render_pdf/doc.rpdf")
+#     - AV::Template#render_template(view, locals = {})
+#       - AV::Template#render(view, locals = {})  # in Renderable
+#         - AV::Template#compile(locals = {})  # in Renderable
+#           - AV::Template#recompile?(render_symbol) #=> true  # in Renderable
+#             - AV::PathSet::Path.eager_load_templates? #=> false since config.cache_classes is false
+#           - AV::Template#compile!(render_symbol, local_assigns = {})  # in Renderable
+#             - AV::Template#compiled_source #=> "the template"  # Renderable
+#               - AV::Template#handler
+#                 - AV::Template.handler_class_for_extension(extension = "rpdf") #=> should return PDF::HTMLDoc::View??  # in TemplateHandlers
+#               - PDF::HTMLDoc::View#call #=> "PDF::HTMLDoc::View.new(self).render(template, local_assigns)"
+#             - PDF::HTMLDoc::View.new(view).render(template, local_assigns = {})
+
 Protest::Rails::FunctionalTestCase.describe("render_pdf") do
   self.controller_class = RenderPdfController
+  
+  def visit(url, options={})
+    get(url, options)
+    #puts "Headers:"
+    #pp :headers => response.headers
+    #puts "Response body:"
+    #puts response.body unless response.success?
+  end
   
   test "converts a view into a PDF with the right content type" do
     visit :default
