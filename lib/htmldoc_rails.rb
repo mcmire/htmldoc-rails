@@ -1,21 +1,21 @@
-require 'mcmire/render_htmldoc_pdf/controller'
-require 'mcmire/render_htmldoc_pdf/pdf_htmldoc_ext'
-require 'mcmire/render_htmldoc_pdf/pdf_htmldoc_view'
+require 'htmldoc_rails/htmldoc_ext'
+require 'htmldoc_rails/controller'
+require 'htmldoc_rails/template_handler'
 
-module Mcmire
-  module RenderHtmldocPdf
-    def self.action_view
+module HtmldocRails
+  class << self
+    def action_view
       ActionPack::VERSION::MAJOR == 1 ? ActionView::Base : ActionView::Template
+    end
+    def debug=(mode)
+      @debug = mode
+    end
+    def debug?
+      @debug
     end
   end
 end
 
-ActionController::Base.send(:include, Mcmire::RenderHtmldocPdf::Controller)
-
-#unless Mime.const_defined?(:PDF) || Mime::Type.lookup('application/pdf')
-  Mime::Type.register('application/pdf', :pdf)
-#end
-
-Mcmire::RenderHtmldocPdf.action_view.register_template_handler :rpdf, PDF::HTMLDoc::View
-
-#p :extensions => ActionView::Template.template_handler_extensions
+ActionController::Base.send(:include, HtmldocRails::Controller)
+HtmldocRails.action_view.register_template_handler(:rpdf, HtmldocRails::TemplateHandler)
+Mime::Type.register('application/pdf', :pdf)

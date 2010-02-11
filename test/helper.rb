@@ -49,38 +49,9 @@ require 'active_support/version'
 RAILS_ROOT = File.expand_path(File.dirname(__FILE__))
 RAILS_ENV = "test"
 
-#ActionController::Base.logger = Logger.new(STDOUT)
-#ActionController::Base.logger.level = Logger::DEBUG
-
 # Disable sessions so we don't get a 'key is required to write a cookie
 # containing the session data' error
 ActionController::Base.session_store = nil
-
-# Copied from Protest::Rails, customized to remove webrat and transactions,
-# made compatible with Rails 2.1
-=begin
-module Protest
-  module Rails
-    class TestCase < ::Protest::TestCase
-      #include ::Test::Unit::Assertions
-      #if ::ActiveSupport::VERSION::STRING != "2.1.2"
-      #  include ::ActiveSupport::Testing::Assertions
-      #end
-      #%w(response selector tag dom routing model).each do |kind|
-      #  require "action_controller/assertions/#{kind}_assertions"
-      #  include ::ActionController::Assertions.const_get("#{kind.camelize}Assertions")
-      #end
-      include ::ActionController::Integration::Runner
-    end
-  end
-  class << self
-    def context(description, &block)
-      Rails::TestCase.context(description, &block)
-    end
-    alias_method :describe, :context
-  end
-end
-=end
 
 module Protest
   module Rails
@@ -134,11 +105,6 @@ module Protest
         @controller.request = @request = ActionController::TestRequest.new
         @response = ActionController::TestResponse.new
       end
-
-      # Cause the action to be rescued according to the regular rules for rescue_action when the visitor is not local
-      #def rescue_action_in_public!
-      #  @request.remote_addr = '208.77.188.166' # example.com
-      #end
     end
   end
 end
@@ -147,20 +113,16 @@ require 'htmldoc'
 
 #----
 
-# This is only here so PDF::HTMLDoc::View won't complain
+# This is only here so our template handler won't complain
 module ApplicationHelper; end
 
 ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action'
 end
 
-require 'mcmire/render_htmldoc_pdf'
+require 'htmldoc-rails'
 
 # This has to be set after we require htmldoc-rails and consequently
 # after rpdf is added to the template handlers, that way the Template objects
 # have rpdf stored as the extension
 ActionController::Base.view_paths = File.expand_path(File.dirname(__FILE__) + '/views')
-#template = ActionController::Base.view_paths["render_pdf/doc.rpdf"]
-#pp :paths => ActionController::Base.view_paths,
-#   :template => template,
-#   :zzztop => template.send(:valid_extension?, "rpdf")

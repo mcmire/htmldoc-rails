@@ -1,17 +1,17 @@
 require 'rubygems'
 require 'rake'
 
-require File.dirname(__FILE__) + "/lib/mcmire/render_htmldoc_pdf/version"
+require File.dirname(__FILE__) + "/lib/htmldoc_rails/version"
 
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.version = Mcmire::RenderHtmldocPdf::VERSION
-    gem.name = "render_htmldoc_pdf"
+    gem.version = HtmldocRails::VERSION
+    gem.name = "htmldoc-rails"
     gem.summary = %Q{Generate PDFs from your Rails views using HTMLDoc}
     gem.description = %Q{Generate PDFs from your Rails views using HTMLDoc}
     gem.email = "elliot.winkler@gmail.com"
-    gem.homepage = "http://github.com/mcmire/render_htmldoc_pdf"
+    gem.homepage = "http://github.com/mcmire/htmldoc-rails"
     gem.authors = ["Elliot Winkler"]
     gem.add_dependency "htmldoc"
     unless ENV["AP_VERSION"]
