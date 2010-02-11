@@ -31,8 +31,16 @@ Protest::Utils::BacktraceFilter::ESCAPE_PATHS << %r|test/unit| << %r|matchy| << 
 if ENV["AP_VERSION"]
   gem 'actionpack', "= #{ENV["AP_VERSION"]}"
 end
+
 require 'action_controller'
+
+# Since ActionController::TestCase in 2.3.5 tries to require Mocha
+# and replaces it with a stub on failure we have to save a reference
+# to the current class and then replace the stub Mocha with the real Mocha
+CurrentMocha = Mocha
 require 'action_controller/test_case'
+Object.const_set :Mocha, CurrentMocha
+
 require 'action_controller/integration'
 require 'action_view'
 require 'action_pack/version'

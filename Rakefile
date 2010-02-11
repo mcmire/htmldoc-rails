@@ -36,6 +36,38 @@ Rake::TestTask.new(:test) do |test|
   test.verbose = true
 end
 
+namespace :test do
+  def run(*cmd)
+    cmd = cmd.flatten
+    options = Hash === cmd.last ? cmd.pop : {}
+    cmd.unshift("sudo") if options[:sudo]
+    puts cmd.join(" ")
+    system(*cmd)
+    exit if $? != 0
+  end
+  def run_gem(*cmd)
+    run "gem", cmd, :sudo => (ENV["GEM_PATH"] !~ /rvm/)
+  end
+  
+  task :all do
+    require File.dirname(__FILE__) + '/test/all'
+  end
+  
+  task :install_dependencies do
+    puts
+    puts "Installing dev test gems..."
+    puts
+    run_gem %w(install jeweler htmldoc mcmire-protest mcmire-matchy mcmire-mocha mocha-protest-integration)
+    for version in %w(2.1.2 2.2.3 2.3.5)
+      puts
+      puts "Installing rails v#{version}..."
+      puts
+      run_gem %w(install rails -v), version
+    end
+    puts
+  end
+end
+
 task :check_platform do
   if RUBY_PLATFORM !~ /darwin|linux/
     warn <<-EOT

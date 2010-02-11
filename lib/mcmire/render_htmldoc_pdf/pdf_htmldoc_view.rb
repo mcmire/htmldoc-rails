@@ -1,12 +1,13 @@
 # Based on PDF::HTMLDoc::View by Marcello Barnaba <vjt@openssl.it>
 # http://gist.github.com/53906
+# And also http://info.michael-simons.eu/2008/11/24/pdfwriter-and-ruby-on-rails-222/
 #
 class PDF::HTMLDoc::View < ActionView::TemplateHandler
   #include ActionView::TemplateHandlers::Compilable
   
   include ApplicationHelper
-  include ActionView::Helpers::TranslationHelper
   include ActionView::Helpers::AssetTagHelper
+  include ActionView::Helpers::NumberHelper
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::UrlHelper
@@ -17,6 +18,7 @@ class PDF::HTMLDoc::View < ActionView::TemplateHandler
 
   def initialize(action_view)
     @action_view = action_view
+    @controller = @action_view.controller
   end
   
   def render(template, local_assigns={})

@@ -82,6 +82,8 @@ Protest::Rails::FunctionalTestCase.describe("render_pdf") do
   test "the PDF file is rendered with no layout by default" do
     controller.stubs(:render_to_string)
     visit :default
+    puts "Response body:"
+    puts response.body
     controller.should have_received(:render_to_string).with(has_entry(:layout, false))
   end
   test "the PDF file is rendered with a layout if one was specified" do
