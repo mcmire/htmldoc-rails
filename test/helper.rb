@@ -23,8 +23,8 @@ end
 Matchy.use(:protest)
 
 Protest.report_with :documentation
-Protest::Utils::BacktraceFilter::ESCAPE_PATHS << %r|test/unit| << %r|matchy| << %r|mocha-protest-integration| << %r|actionpack|
-#Protest::Utils::BacktraceFilter::ESCAPE_PATHS.clear
+#Protest::Utils::BacktraceFilter::ESCAPE_PATHS << %r|test/unit| << %r|matchy| << %r|mocha-protest-integration| << %r|actionpack|
+Protest::Utils::BacktraceFilter::ESCAPE_PATHS.clear
 
 #----
 
@@ -48,6 +48,10 @@ require 'active_support/version'
 
 RAILS_ROOT = File.expand_path(File.dirname(__FILE__))
 RAILS_ENV = "test"
+
+#logger = Logger.new(STDOUT)
+#logger.level = Logger::DEBUG
+#ActionController::Base.logger = logger
 
 # Disable sessions so we don't get a 'key is required to write a cookie
 # containing the session data' error

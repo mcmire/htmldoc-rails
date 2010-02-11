@@ -3,53 +3,54 @@
 # And also http://info.michael-simons.eu/2008/11/24/pdfwriter-and-ruby-on-rails-222/
 #
 module HtmldocRails
-  class TemplateHandler < ActionView::TemplateHandler
-    include ApplicationHelper
-    include ActionView::Helpers::AssetTagHelper
-    include ActionView::Helpers::NumberHelper
-    include ActionView::Helpers::TagHelper
-    include ActionView::Helpers::TextHelper
-    include ActionView::Helpers::UrlHelper
+  class TemplateHandler < ActionView::TemplateHandlers::ERB
   
-    def self.call(template)
-      "HtmldocRails::TemplateHandler.new(self).render(template, local_assigns)"
-    end
+    def compile(template)
+      # Run the view through ERB first
+      code = super
+      
+      buffer_variable = ActionPack::VERSION::STRING >= "2.2" ? '@output_buffer' : '_erbout'
+      
+      # Now run it through HTMLDoc
+      code += ";\n"
+      code += <<-EOT
+#puts "---------------------"
+#puts "Output buffer:"
+#puts "---------------------"
+#puts #{buffer_variable}
 
-    def initialize(action_view)
-      @action_view = action_view
-      @controller = @action_view.controller
-    end
-  
-    def render(template, local_assigns={})
-      # Evaluate the view
-      content = (ActionPack::VERSION::MAJOR == 1) ? template : template.source
-      markup = ERB.new(content).result(binding)
+pdf = PDF::HTMLDoc.new
+# don't know what this does
+pdf.set_option :path, Pathname.new(File.join(RAILS_ROOT, 'public')).realpath.to_s
+pdf << #{buffer_variable}
+result = pdf.generate
 
-      if HtmldocRails.debug?
-        write_file(markup, "out.html", "Writing view to file")
-      end
+unless pdf.errors.empty?
+  err = "Couldn't create PDF:\\n"
+  pdf.errors.map do |k,v|
+    err << "\#{k}: \#{v}\\n"
+  end
+  raise(err)
+end
 
-      # Run the view through HTMLDoc and return the output, or raise errors if there are any
-      pdf = PDF::HTMLDoc.new
-      # don't know what this does
-      pdf.set_option :path, Pathname.new(File.join(RAILS_ROOT, 'public')).realpath.to_s
-      pdf << markup
-    
-      result = pdf.generate
-    
-      if HtmldocRails.debug?
-        write_file(result, "out.pdf", "Writing PDF to file")
-      end
-    
-      return result if result
-    
-      unless pdf.errors.empty?
-        err = "Couldn't create PDF:\n"
-        pdf.errors.map do |k,v|
-          err << "#{k}: #{v}\n"
-        end
-        raise(err)
-      end
+#{buffer_variable} = result
+EOT
+
+      code = <<EOT
+begin
+  #{code}
+rescue => e
+  puts "\#{e.class}: \#{e.message}"
+  puts e.backtrace.join("\\n")
+end
+EOT
+      
+      #puts "---------------------"
+      #puts "Code:"
+      #puts "---------------------"
+      #puts code
+      
+      code
     end
     
   private
