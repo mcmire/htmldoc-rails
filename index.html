@@ -62,7 +62,7 @@
 <span class='lt op'>&lt;</span><span class='p identifier id'>p</span><span class='gt op'>&gt;</span><span class='Some constant id'>Some</span> <span class='content identifier id'>content</span> <span class='goes identifier id'>goes</span> <span class='here identifier id'>here</span><span class='lt op'>&lt;</span><span class='regexp val'>/p&gt;
 </span></pre>
 
-<p>Now let's say we want to give the user a regular HTML view when they go to <code>/foo/bar</code>, but a PDF file when they go to <code>/foo/bar.pdf</code>. We can use <code>respond_to</code> to differentiate between the two course of actions, but as for generating the PDF file itself, <code>htmldoc-rails</code> provides a special method called <code>render_pdf</code>. This method is responsible for piping a view through HTMLDoc and telling the action to return a PDF file. It also accepts options such as which view you want the PDF to be generated from, whether or not a download box should appear, and so on (you can find the possible options in the <a href="http://mcmire.github.com/htmldoc_rails">documentation</a>). Since we want to use the HTML view to generate the PDF, all we have to say is this:</p>
+<p>Now let's say we want to give the user a regular HTML view when they go to <code>/foo/bar</code>, but a PDF file when they go to <code>/foo/bar.pdf</code>. We can use <code>respond_to</code> to differentiate between the two course of actions, but as for generating the PDF file itself, <code>htmldoc-rails</code> provides a special method called <code>render_pdf</code>. This method is responsible for piping a view through HTMLDoc and telling the action to return a PDF file. It also accepts options such as which view you want the PDF to be generated from, whether or not a download box should appear, and so on (you can find the possible options in the <a href="http://mcmire.github.com/htmldoc-rails/HtmldocRails/Controller.html#render_pdf-instance_method">documentation</a>). Since we want to use the HTML view to generate the PDF, all we have to say is this:</p>
 
 <pre class="code"><span class='comment val'># controller</span>
 <span class='class class kw'>class</span> <span class='FooController constant id'>FooController</span> <span class='lt op'>&lt;</span> <span class='ApplicationController constant id'>ApplicationController</span>
@@ -120,7 +120,7 @@
 <p>(c) 2008-2010 Elliot Winkler. See LICENSE for details.</p></div></div>
     
     <div id="footer">
-  Generated on Thu Feb 11 22:33:44 2010 by 
+  Generated on Thu Feb 11 22:59:02 2010 by 
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
   0.5.3 (ruby-1.8.6).
 </div>
