@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
      "LICENSE",
      "README.md",
      "Rakefile",
+     "htmldoc-rails.gemspec",
      "init.rb",
      "lib/htmldoc-rails.rb",
      "lib/htmldoc_rails.rb",
