@@ -1,0 +1,491 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta name="Content-Type" content="text/html; charset=UTF-8" />
+<title>Module: HtmldocRails::Controller</title>
+<link rel="stylesheet" href="../css/style.css" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '..';
+  if (relpath != '') relpath += '/';
+</script>
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (C)</a> &raquo; 
+    <span class='title'><a href="../HtmldocRails.html" title="HtmldocRails (module)">HtmldocRails</a></span>
+     &raquo; 
+    <span class="title">Controller</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  <a id="class_list_link" href="#">Class List</a>
+  <a id="method_list_link" href="#">Method List</a>
+  <a id ="file_list_link" href="#">File List</a>
+</div>
+
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><h1>Module: HtmldocRails::Controller 
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/htmldoc_rails/controller.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+  <h2>Instance Method Summary</h2>
+
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#render_pdf-instance_method" title="#render_pdf (instance method)">- (Object) <strong>render_pdf</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc">
+Runs the given view through HTMLDoc and sends the generated PDF data back
+to the browser.
+
+</span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#render_pdf_to_file-instance_method" title="#render_pdf_to_file (instance method)">- (Object) <strong>render_pdf_to_file</strong>(filename, render_options = {}, htmldoc_options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc">
+Runs the given view through HTMLDoc and writes the generated PDF data to
+the file of your choice.
+
+</span>
+  
+</li>
+
+    
+  </ul>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+    
+    
+      <div class="method_details first">
+  <p class="signature first" id="render_pdf-instance_method">
+  
+    - (<tt>Object</tt>) <strong>render_pdf</strong>(options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Runs the given view through HTMLDoc and sends the generated PDF data back
+to the browser.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4>
+Rendering default view of action as PDF
+
+</h4>
+      <pre class="example code">  <span class='render_pdf identifier id'>render_pdf</span>
+</pre>
+    
+      <h4>
+Rendering a specific view as PDF
+
+</h4>
+      <pre class="example code">  <span class='render_pdf identifier id'>render_pdf</span> <span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'bar'</span>
+</pre>
+    
+      <h4>
+Set a top-margin of 50px in the PDF and force a download box when the page
+loads
+
+</h4>
+      <pre class="example code">  <span class='render_pdf identifier id'>render_pdf</span> <span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;bar&quot;</span><span class='comma token'>,</span> <span class='symbol val'>:as</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='symbol val'>:attachment</span><span class='comma token'>,</span> <span class='symbol val'>:htmldoc</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='lbrace token'>{</span> <span class='symbol val'>:top</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span> <span class='rbrace token'>}</span>
+</pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <span class='name'>options</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        
+Various options
+
+
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    <h3>Options Hash (<tt>options</tt>):</h3>
+    <ul class="option">
+      
+        <li>
+          <span class="type">(<tt>Hash</tt>, <tt>String</tt>)</span>
+          <span class="name">:url</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>nil</tt>
+            
+          </span>
+          &mdash;
+The hash/url that represents which view you want to render. Passed straight
+to <tt>render()</tt>.
+
+
+        </tr>
+      
+        <li>
+          <span class="type">(<tt>Symbol</tt>)</span>
+          <span class="name">:as</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>:inline</tt>
+            
+          </span>
+          &mdash;
+The disposition; <tt>:inline</tt> renders the PDF in the browser,
+<tt>:attachment</tt> pops up a download box when the page loads. You can
+also set the disposition at runtime by appending
+<tt>?as=attachment|inline</tt> to the URL.
+
+
+        </tr>
+      
+        <li>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="name">:filename</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>nil</tt>
+            
+          </span>
+          &mdash;
+The default filename for the file being downloaded, assuming <tt>:as =&gt;
+:attachment</tt>.
+
+
+        </tr>
+      
+        <li>
+          <span class="type">(<tt>Hash</tt>)</span>
+          <span class="name">:htmldoc</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>{}</tt>
+            
+          </span>
+          &mdash;
+Options that will be passed to HTMLDoc when the PDF is rendered.
+
+
+        </tr>
+      
+    </ul>
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/htmldoc_rails/controller.rb', line 25</span>
+
+<span class='def def kw'>def</span> <span class='render_pdf identifier id'>render_pdf</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='filename identifier id'>filename</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:filename</span><span class='rparen token'>)</span>
+  <span class='disposition identifier id'>disposition</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:as</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='params identifier id'>params</span><span class='lbrack token'>[</span><span class='symbol val'>:as</span><span class='rbrack token'>]</span> <span class='orop op'>||</span> <span class='symbol val'>:inline</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='to_sym identifier id'>to_sym</span>
+  <span class='htmldoc_options identifier id'>htmldoc_options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:htmldoc</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span>
+  <span class='render_options identifier id'>render_options</span> <span class='assign token'>=</span> <span class='options identifier id'>options</span><span class='dot token'>.</span><span class='merge identifier id'>merge</span><span class='lparen token'>(</span><span class='options identifier id'>options</span><span class='dot token'>.</span><span class='delete identifier id'>delete</span><span class='lparen token'>(</span><span class='symbol val'>:url</span><span class='rparen token'>)</span> <span class='orop op'>||</span> <span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='render_options identifier id'>render_options</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:layout</span><span class='rparen token'>)</span>
+    <span class='render_options identifier id'>render_options</span><span class='lbrack token'>[</span><span class='symbol val'>:layout</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  <span class='end end kw'>end</span>
+
+  <span class='send_data_options identifier id'>send_data_options</span> <span class='assign token'>=</span> <span class='lbrace token'>{</span> <span class='symbol val'>:type</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='content_type identifier id'>content_type</span> <span class='rbrace token'>}</span>
+  <span class='send_data_options identifier id'>send_data_options</span><span class='lbrack token'>[</span><span class='symbol val'>:filename</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='filename identifier id'>filename</span> <span class='if if_mod kw'>if</span> <span class='filename identifier id'>filename</span>
+  <span class='send_data_options identifier id'>send_data_options</span><span class='lbrack token'>[</span><span class='symbol val'>:disposition</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='disposition identifier id'>disposition</span> <span class='eq op'>==</span> <span class='symbol val'>:attachment</span><span class='rparen token'>)</span> <span class='question op'>?</span> <span class='string val'>'attachment'</span> <span class='colon op'>:</span> <span class='string val'>'inline'</span>
+
+  <span class='comment val'># Make sure that the rendered PDF isn't cached</span>
+  <span class='if if kw'>if</span> <span class='request identifier id'>request</span><span class='dot token'>.</span><span class='env identifier id'>env</span><span class='lbrack token'>[</span><span class='string val'>'HTTP_USER_AGENT'</span><span class='rbrack token'>]</span> <span class='match op'>=~</span> <span class='regexp val'>/msie/i</span>
+    <span class='headers identifier id'>headers</span><span class='lbrack token'>[</span><span class='string val'>'Pragma'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>''</span>
+    <span class='headers identifier id'>headers</span><span class='lbrack token'>[</span><span class='string val'>'Cache-Control'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>''</span>
+  <span class='else else kw'>else</span>
+    <span class='headers identifier id'>headers</span><span class='lbrack token'>[</span><span class='string val'>'Pragma'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'no-cache'</span>
+    <span class='headers identifier id'>headers</span><span class='lbrack token'>[</span><span class='string val'>'Cache-Control'</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>'no-cache, must-revalidate'</span>
+  <span class='end end kw'>end</span>
+
+  <span class='comment val'># Run view through PDF::HTMLDoc::View</span>
+  <span class='html_content identifier id'>html_content</span> <span class='assign token'>=</span> <span class='render_to_string identifier id'>render_to_string</span><span class='lparen token'>(</span><span class='render_options identifier id'>render_options</span><span class='rparen token'>)</span>
+  <span class='pdf_data identifier id'>pdf_data</span> <span class='assign token'>=</span> <span class='run_through_htmldoc identifier id'>run_through_htmldoc</span><span class='lparen token'>(</span><span class='html_content identifier id'>html_content</span><span class='comma token'>,</span> <span class='htmldoc_options identifier id'>htmldoc_options</span><span class='rparen token'>)</span>
+  <span class='unless unless kw'>unless</span> <span class='pdf_data identifier id'>pdf_data</span><span class='dot token'>.</span><span class='blank? fid id'>blank?</span>
+    <span class='send_data identifier id'>send_data</span><span class='lparen token'>(</span><span class='pdf_data identifier id'>pdf_data</span><span class='comma token'>,</span> <span class='send_data_options identifier id'>send_data_options</span><span class='rparen token'>)</span> 
+  <span class='else else kw'>else</span>
+    <span class='render identifier id'>render</span> <span class='symbol val'>:text</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>&quot;HTMLDoc had trouble parsing the HTML to create the PDF.&quot;</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <p class="signature " id="render_pdf_to_file-instance_method">
+  
+    - (<tt>Object</tt>) <strong>render_pdf_to_file</strong>(filename, render_options = {}, htmldoc_options = {}) 
+  
+
+  
+</p><div class="docstring">
+  <div class="discussion">
+    <p>
+Runs the given view through HTMLDoc and writes the generated PDF data to
+the file of your choice.
+</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <h3>Examples:</h3>
+    
+      <h4>
+Render the &#8216;blah&#8217; view to &#8216;foo.pdf&#8217;
+
+</h4>
+      <pre class="example code">  <span class='render_pdf_to_file identifier id'>render_pdf_to_file</span> <span class='string val'>'foo.pdf'</span><span class='comma token'>,</span> <span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'blah'</span>
+</pre>
+    
+      <h4>
+Same thing, but set a top-margin of 50px in the PDF
+
+</h4>
+      <pre class="example code">  <span class='render_pdf_to_file identifier id'>render_pdf_to_file</span> <span class='string val'>'foo.pdf'</span><span class='comma token'>,</span> <span class='lbrace token'>{</span> <span class='symbol val'>:action</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='string val'>'blah'</span> <span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='lbrace token'>{</span> <span class='symbol val'>:top</span> <span class='assign token'>=</span><span class='gt op'>&gt;</span> <span class='integer val'>50</span> <span class='rbrace token'>}</span>
+</pre>
+    
+  </div>
+<h3>Parameters:</h3>
+<ul class="param">
+  
+    <li>
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <span class='name'>filename</span>
+      
+      
+      
+        &mdash;
+        
+The outfile
+
+
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash</tt>, <tt>String</tt>)</span>
+      
+      
+        <span class='name'>render_options</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        
+The hash/url that represents which view you want to render. Passed straight
+to <tt>render()</tt>.
+
+
+      
+    </li>
+  
+    <li>
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <span class='name'>htmldoc_options</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        
+Options that will be passed to HTMLDoc when the PDF is rendered.
+
+
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+71
+72
+73
+74
+75
+76
+77
+78
+79</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/htmldoc_rails/controller.rb', line 71</span>
+
+<span class='def def kw'>def</span> <span class='render_pdf_to_file identifier id'>render_pdf_to_file</span><span class='lparen token'>(</span><span class='filename identifier id'>filename</span><span class='comma token'>,</span> <span class='render_options identifier id'>render_options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='comma token'>,</span> <span class='htmldoc_options identifier id'>htmldoc_options</span><span class='assign token'>=</span><span class='lbrace token'>{</span><span class='rbrace token'>}</span><span class='rparen token'>)</span>
+  <span class='if if kw'>if</span> <span class='notop op'>!</span><span class='render_options identifier id'>render_options</span><span class='dot token'>.</span><span class='include? fid id'>include?</span><span class='lparen token'>(</span><span class='symbol val'>:layout</span><span class='rparen token'>)</span>
+    <span class='render_options identifier id'>render_options</span><span class='lbrack token'>[</span><span class='symbol val'>:layout</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='false false kw'>false</span>
+  <span class='end end kw'>end</span>
+  <span class='headers identifier id'>headers</span><span class='lbrack token'>[</span><span class='string val'>&quot;Content-Disposition&quot;</span><span class='rbrack token'>]</span> <span class='assign token'>=</span> <span class='string val'>&quot;inline&quot;</span>
+  <span class='html_content identifier id'>html_content</span> <span class='assign token'>=</span> <span class='render_to_string identifier id'>render_to_string</span><span class='lparen token'>(</span><span class='render_options identifier id'>render_options</span><span class='rparen token'>)</span>
+  <span class='pdf_data identifier id'>pdf_data</span> <span class='assign token'>=</span> <span class='run_through_htmldoc identifier id'>run_through_htmldoc</span><span class='lparen token'>(</span><span class='html_content identifier id'>html_content</span><span class='comma token'>,</span> <span class='htmldoc_options identifier id'>htmldoc_options</span><span class='rparen token'>)</span>
+  <span class='File constant id'>File</span><span class='dot token'>.</span><span class='open identifier id'>open</span><span class='lparen token'>(</span><span class='filename identifier id'>filename</span><span class='comma token'>,</span> <span class='string val'>'w'</span><span class='rparen token'>)</span> <span class='lbrace token'>{</span><span class='bitor op'>|</span><span class='f identifier id'>f</span><span class='bitor op'>|</span> <span class='f identifier id'>f</span><span class='dot token'>.</span><span class='write identifier id'>write</span><span class='lparen token'>(</span><span class='pdf_data identifier id'>pdf_data</span><span class='rparen token'>)</span> <span class='rbrace token'>}</span>
+<span class='end end kw'>end</span>
+</pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+    
+    <div id="footer">
+  Generated on Thu Feb 11 22:33:45 2010 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool">yard</a>
+  0.5.3 (ruby-1.8.6).
+</div>
+
+  </body>
+</html>
