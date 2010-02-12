@@ -23,8 +23,8 @@ end
 Matchy.use(:protest)
 
 Protest.report_with :documentation
-#Protest::Utils::BacktraceFilter::ESCAPE_PATHS << %r|test/unit| << %r|matchy| << %r|mocha-protest-integration| << %r|actionpack|
-Protest::Utils::BacktraceFilter::ESCAPE_PATHS.clear
+Protest::Utils::BacktraceFilter::ESCAPE_PATHS << %r|test/unit| << %r|matchy| << %r|mocha-protest-integration| << %r|actionpack|
+#Protest::Utils::BacktraceFilter::ESCAPE_PATHS.clear
 
 #----
 
@@ -45,6 +45,10 @@ require 'action_controller/integration'
 require 'action_view'
 require 'action_pack/version'
 require 'active_support/version'
+
+puts
+puts " -- Using ActionPack v#{ActionPack::VERSION::STRING}, on Ruby #{RUBY_VERSION}."
+puts
 
 RAILS_ROOT = File.expand_path(File.dirname(__FILE__))
 RAILS_ENV = "test"

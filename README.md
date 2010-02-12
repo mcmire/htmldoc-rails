@@ -1,4 +1,4 @@
-# render_htmldoc_pdf
+# htmldoc-rails
 
 ## Summary
 
@@ -11,27 +11,24 @@ Let's say we've got this setup:
     # controller
     class FooController < ApplicationController
       def bar
-        # ...
+        # render bar.html.erb
       end
     end
     
     # view - bar.html.erb
     <p>Some content goes here</p>
     
-Now let's say we want to give the user a PDF file when they go to /foo/bar, and we want the content to be generated from the view. There are only two things we have to do. First, we have to give the view an `.rpdf` extension. This extension is special and tells Rails to use a custom renderer class in rendering the view (which will run through HTMLDoc). Second, we use `render_pdf` in the controller action, instead of `render`. This is also special, but it allows us to pass some options, such as whether or not a download box should appear, and so on. So after we've done those two things we'll have this:
+Now let's say we want to give the user a regular HTML view when they go to `/foo/bar`, but a PDF file when they go to `/foo/bar.pdf`. We can use `respond_to` to differentiate between the two course of actions, but as for generating the PDF file itself, `htmldoc-rails` provides a special method called `render_pdf`. This method is responsible for piping a view through HTMLDoc and telling the action to return a PDF file. It also accept options such as which view you want the PDF to be generated from, whether or not a download box should appear, and so on (you can find the possible options in the [documentation](http://mcmire.github.com/htmldoc_rails)). Since we want to use the HTML view to generate the PDF, all we have to say is this:
 
   # controller
   class FooController < ApplicationController
     def bar
-      # ...
-      render_pdf :action => 'bar.rpdf'
+      respond_to do |wants|
+        wants.html
+        wants.pdf { render_pdf }
+      end
     end
   end
-  
-  # view - bar.rpdf
-  <p>Some content goes here</p>
-  
-If you want to know what all of the options to `render_pdf` are, then check out `lib/mcmire/render_htmldoc_pdf/controller.rb`.
 
 ## Prerequisites
 
@@ -65,10 +62,6 @@ This gem has been tested successfully on Rails 2.1.2, 2.2.3, and 2.3.5 under Rub
 If you find a bug or have a feature request, I want to know about it! Feel free to file a [Github issue](http://github.com/mcmire/render_htmldoc_pdf/issues), or do one better and fork the [project on Github](http://github.com/mcmire/render_htmldoc_pdf) and send me a pull request or patch. Be sure to add tests if you do so, though.
 
 You can also [email me](mailto:elliot.winkler@gmail.com), or [find me on Twitter](http://twitter.com/mcmire).
-
-## Credits
-
-The template handler originated from PDF::HTMLDoc::View by Marcello Barnaba (<http://gist.github.com/53906>).
 
 ## Author/License
 

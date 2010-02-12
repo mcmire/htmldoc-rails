@@ -27,7 +27,7 @@ module HtmldocRails
     # You can also affect the disposition at runtime by appending
     # ?as=attachment|inline to the URL.
     #
-    def render_pdf(options)
+    def render_pdf(options={})
       filename = options.delete(:filename)
       disposition = (options.delete(:as) || params[:as] || :inline).to_sym
       htmldoc_options = options.delete(:htmldoc) || {}
@@ -52,7 +52,8 @@ module HtmldocRails
       end
     
       # run view through PDF::HTMLDoc::View
-      pdf_data = PDF::HTMLDoc.with_options(htmldoc_options) { render_to_string(render_options) }
+      html_content = render_to_string(render_options)
+      pdf_data = run_through_htmldoc(html_content, htmldoc_options)
       unless pdf_data.blank?
         send_data(pdf_data, send_data_options) 
       else
@@ -75,19 +76,30 @@ module HtmldocRails
     # 2. The url hash/string that points to the view to render
     # 3. Options to pass to HTMLDoc (optional)
     #
-    def render_pdf_to_file(filename, url_for_options, htmldoc_options={})
-      if !url_for_options.include?(:layout)
-        url_for_options[:layout] = false
+    def render_pdf_to_file(filename, render_options={}, htmldoc_options={})
+      if !render_options.include?(:layout)
+        render_options[:layout] = false
       end
       headers["Content-Disposition"] = "inline"
-      pdf_data = PDF::HTMLDoc.with_options(htmldoc_options) { render_to_string(url_for_options) }
+      html_content = render_to_string(render_options)
+      pdf_data = run_through_htmldoc(html_content, htmldoc_options)
       File.open(filename, 'w') {|f| f.write(pdf_data) }
     end
 
   private
+    def run_through_htmldoc(content, htmldoc_options)
+      PDF::HTMLDoc.create do |pdf|
+        PDF::HTMLDoc::DEFAULT_OPTIONS.merge(htmldoc_options).each do |name, value|
+          pdf.set_option(name, value)
+        end
+        # don't know what this does??
+        pdf.set_option :path, Pathname.new(File.join(RAILS_ROOT, 'public')).realpath.to_s
+        pdf << content
+      end
+    end
+  
     def content_type
       Mime::Type.lookup_by_extension('pdf')
     end
-    
   end
 end

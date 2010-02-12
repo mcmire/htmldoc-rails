@@ -1,6 +1,5 @@
 require 'htmldoc_rails/htmldoc_ext'
 require 'htmldoc_rails/controller'
-require 'htmldoc_rails/template_handler'
 
 module HtmldocRails
   class << self
@@ -17,5 +16,4 @@ module HtmldocRails
 end
 
 ActionController::Base.send(:include, HtmldocRails::Controller)
-HtmldocRails.action_view.register_template_handler(:rpdf, HtmldocRails::TemplateHandler)
 Mime::Type.register('application/pdf', :pdf)
