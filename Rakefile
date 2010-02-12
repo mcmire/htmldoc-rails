@@ -21,7 +21,7 @@ begin
     gem.add_development_dependency "mcmire-matchy"
     gem.add_development_dependency "mcmire-mocha"
     gem.add_development_dependency "mocha-protest-integration"
-    #gem.add_development_dependency "yard", ">= 0"
+    gem.add_development_dependency "yard", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -85,7 +85,9 @@ task :default => :test
 
 begin
   require 'yard'
-  YARD::Rake::YardocTask.new
+  YARD::Rake::YardocTask.new do |t|
+    t.options = ['--no-private']
+  end
 rescue LoadError
   task :yardoc do
     abort "YARD is not available. In order to run yardoc, you must: sudo gem install yard"

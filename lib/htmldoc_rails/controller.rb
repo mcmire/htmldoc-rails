@@ -1,31 +1,26 @@
 module HtmldocRails
   module Controller
-    # Converts the given view to PDF and gives it to the browser. You can call
-    # it like this:
+    # Runs the given view through HTMLDoc and sends the generated PDF data back
+    # to the browser.
     #
-    #   render_pdf :controller => 'foo', :action => 'bar'
+    # @param [Hash] options Various options
+    # @option options [Hash, String] :url (nil) The hash/url that represents which
+    #   view you want to render. Passed straight to <tt>render()</tt>.
+    # @option options [Symbol] :as (:inline) The disposition; <tt>:inline</tt>
+    #   renders the PDF in the browser, <tt>:attachment</tt> pops up a download
+    #   box when the page loads. You can also set the disposition at runtime
+    #   by appending <tt>?as=attachment|inline</tt> to the URL.
+    # @option options [String] :filename (nil) The default filename for the file being
+    #   downloaded, assuming <tt>:as => :attachment</tt>.
+    # @option options [Hash] :htmldoc ({}) Options that will be passed to HTMLDoc
+    #   when the PDF is rendered.
     #
-    # or like this:
-    #
-    #   render_pdf :attachment => true,
-    #     :url => { :controller => 'foo', :action => 'bar' },
-    #     :htmldoc => { :top => 50 }
-    #
-    # Options are:
-    #   :as => :inline
-    #      Renders the PDF in the browser. (default)
-    #   :as => :attachment
-    #      Pops up a download box when the page loads.
-    #   :filename => "..."
-    #      The default filename for the file being downloaded, assuming :as =>
-    #      :attachment.
-    #   :url => {...} | "..."
-    #      The url hash/string that points to the view to render.
-    #   :htmldoc => {...}
-    #      Options that will be passed to HTMLDoc when the PDF is rendered.
-    #
-    # You can also affect the disposition at runtime by appending
-    # ?as=attachment|inline to the URL.
+    # @example Rendering default view of action as PDF
+    #   render_pdf
+    # @example Rendering a specific view as PDF
+    #   render_pdf :action => 'bar'
+    # @example Set a top-margin of 50px in the PDF and force a download box when the page loads
+    #   render_pdf :action => "bar", :as => :attachment, :htmldoc => { :top => 50 }
     #
     def render_pdf(options={})
       filename = options.delete(:filename)
@@ -35,8 +30,6 @@ module HtmldocRails
       if !render_options.include?(:layout)
         render_options[:layout] = false
       end
-      #format = (params[:format] || :rpdf).to_sym
-      #render_options[:format] = format
     
       send_data_options = { :type => content_type }
       send_data_options[:filename] = filename if filename
@@ -51,7 +44,7 @@ module HtmldocRails
         headers['Cache-Control'] = 'no-cache, must-revalidate'
       end
     
-      # run view through PDF::HTMLDoc::View
+      # Run view through PDF::HTMLDoc::View
       html_content = render_to_string(render_options)
       pdf_data = run_through_htmldoc(html_content, htmldoc_options)
       unless pdf_data.blank?
@@ -61,20 +54,19 @@ module HtmldocRails
       end
     end
   
-    # Converts the given view to PDF and stores the PDF to the given file. You
-    # can call it like this:
+    # Runs the given view through HTMLDoc and writes the generated PDF data
+    # to the file of your choice.
     #
+    # @param [String] filename The outfile
+    # @param [Hash, String] render_options The hash/url that represents which
+    #   view you want to render. Passed straight to <tt>render()</tt>.
+    # @param [Hash] htmldoc_options Options that will be passed to HTMLDoc
+    #   when the PDF is rendered.
+    #
+    # @example Render the 'blah' view to 'foo.pdf'
     #   render_pdf_to_file 'foo.pdf', :action => 'blah'
-    #
-    # or this:
-    #
+    # @example Same thing, but set a top-margin of 50px in the PDF
     #   render_pdf_to_file 'foo.pdf', { :action => 'blah' }, { :top => 50 }
-    #
-    # Arguments are:
-    #
-    # 1. The outfile
-    # 2. The url hash/string that points to the view to render
-    # 3. Options to pass to HTMLDoc (optional)
     #
     def render_pdf_to_file(filename, render_options={}, htmldoc_options={})
       if !render_options.include?(:layout)

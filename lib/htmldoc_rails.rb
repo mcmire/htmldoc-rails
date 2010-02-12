@@ -3,6 +3,7 @@ require 'htmldoc_rails/controller'
 
 module HtmldocRails
   class << self
+    # @private
     def action_view
       ActionPack::VERSION::MAJOR == 1 ? ActionView::Base : ActionView::Template
     end

@@ -1,4 +1,6 @@
 .DS_Store
 *.tmproj
+.yardoc
+doc
 test/tmp
 test/tmp/*
