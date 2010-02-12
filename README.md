@@ -18,7 +18,7 @@ Let's say we've got this setup:
     # view - bar.html.erb
     <p>Some content goes here</p>
     
-Now let's say we want to give the user a regular HTML view when they go to `/foo/bar`, but a PDF file when they go to `/foo/bar.pdf`. We can use `respond_to` to differentiate between the two course of actions, but as for generating the PDF file itself, `htmldoc-rails` provides a special method called `render_pdf`. This method is responsible for piping a view through HTMLDoc and telling the action to return a PDF file. It also accepts options such as which view you want the PDF to be generated from, whether or not a download box should appear, and so on (you can find the possible options in the [documentation](http://mcmire.github.com/htmldoc_rails)). Since we want to use the HTML view to generate the PDF, all we have to say is this:
+Now let's say we want to give the user a regular HTML view when they go to `/foo/bar`, but a PDF file when they go to `/foo/bar.pdf`. We can use `respond_to` to differentiate between the two course of actions, but as for generating the PDF file itself, `htmldoc-rails` provides a special method called `render_pdf`. This method is responsible for piping a view through HTMLDoc and telling the action to return a PDF file. It also accepts options such as which view you want the PDF to be generated from, whether or not a download box should appear, and so on (you can find the possible options in the [documentation](http://mcmire.github.com/htmldoc-rails/HtmldocRails/Controller.html#render_pdf-instance_method)). Since we want to use the HTML view to generate the PDF, all we have to say is this:
 
     # controller
     class FooController < ApplicationController
